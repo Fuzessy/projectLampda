@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class F1Parser {
-	// 5+((a+b)*2)
+	
 		public LambdaExpression parseText(String text) throws NoSuchAlgorithmException, ParseException{
 			text = text.replaceAll(" +"," ");
 			StringProcessor sp = new StringProcessor(text);
@@ -21,21 +21,25 @@ public class F1Parser {
 			LambdaExpression le;
 			if(sp.hasNext()){
 				String token = sp.eatNext();
-				
+				// \\x:Bool -> Nat -> Bool.y
 				if(isVariable(token)){
 					le = new LambdaTypeVariable(new Variable(token));
 				}else if(isLambdaAbstrastor(token)){
 					String token2 = sp.eatNext();
 					if(isVariable(token2)){
-						String token3 = sp.eatNext();
-						if(isDot(token3)){
-							le = new LambdaTAbstraction(
-									new LambdaAbstractor(),
-									new Variable(token2),
-									new DotToken(),
-									this.lambdaExpressionParser(sp,true));
+						if(sp.eatNext().equals(":")){
+							TypeParser tp = new TypeParser();
+							Type type = tp.typeParser(sp);
+							if(sp.eatNext().equals(".")){
+								le = new LambdaTAbstraction(
+										new Variable(token2),
+										type,
+										this.lambdaExpressionParser(sp,true));
+							}else{
+								throw new ParseException("hibás absztrakció: \\x után '.'-nak kell jönnie! ",0);
+							}
 						}else{
-							throw new ParseException("hibás absztrakció: \\x után '.'-nak kell jönnie! ",0);
+							throw new ParseException("hibás absztrakció: \\x után ':'-nak kell jönnie! ",0);
 						}
 					}else{
 						throw new ParseException("hibás absztrakció: \\ után változónak kell jönnie! ",0);

@@ -22,6 +22,23 @@ public class StringProcessor {
 		}
 	}
 	
+	/**
+	 * A következõ szóköz vagy pont karakterig olvas, és visszaadja a szöveget,
+	 * fogyasztó típusú
+	 * @return
+	 * @throws NoSuchAlgorithmException
+	 */
+	public String eatNextWord() throws NoSuchAlgorithmException{
+		String word = "";
+		while(this.hasNext() && 
+				!this.getNext().equals(" ") && 
+				!this.getNext().equals(".") && 
+				!this.getNext().equals(")")){
+			word += this.eatNext();
+		}
+		return word;
+	}
+	
 	public String getRemainder(){
 		return text;
 	}

@@ -4,32 +4,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class LambdaTAbstraction extends LambdaExpression{
-	LambdaAbstractor lambdaAbstractor;
+	// \x:Bool -> Nat -> Bool.y
 	Variable variable;
-	DotToken dot;
+	Type type;
 	LambdaExpression lambdaExpression;
 	
-	public LambdaTAbstraction(LambdaAbstractor lambdaAbstractor, Variable variable, DotToken dot, LambdaExpression lambdaExpression) {
+	public LambdaTAbstraction(Variable variable, Type type, LambdaExpression lambdaExpression) {
 		super();
-		this.lambdaAbstractor = lambdaAbstractor;
 		this.variable = variable;
-		this.dot = dot;
-		this.lambdaExpression = lambdaExpression;
-	}
-	
-	public LambdaTAbstraction(Variable variable, LambdaExpression lambdaExpression) {
-		super();
-		this.lambdaAbstractor = new LambdaAbstractor();
-		this.variable = variable;
-		this.dot = new DotToken();
+		this.type = type;
 		this.lambdaExpression = lambdaExpression;
 	}
 
 	@Override
 	public String toString() {
-		return "("+lambdaAbstractor.toString() +
+		return "("+ "\\" +
 				variable.toString() +
-				dot.toString() +
+				":" +
+				type.toString() +
+				"." +
 				lambdaExpression.toString() + ")";
 	}
 
@@ -59,7 +52,8 @@ public class LambdaTAbstraction extends LambdaExpression{
 
 	@Override
 	public String structuredToString(int level) {
-		return  "\nL" + level + ":" + lambdaAbstractor + variable + dot +
+		return  "\nL" + level + ":" + "\\" + variable + 
+				":" + type + "." +
 				"\nR" + level + ":" + lambdaExpression +
 				lambdaExpression.structuredToString(++level);
 	}

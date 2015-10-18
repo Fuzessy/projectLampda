@@ -17,4 +17,10 @@ public class TypeExpression implements Type{
 		return typeTo;
 	}
 	
+	public String toString(){
+		return "(" + typeFrom +
+				" -> " +
+				typeTo + ")";
+	}
+	
 }

@@ -23,6 +23,9 @@ public class ParserTester {
 		assertEquals("(\\x:(Bool -> Nat).y)", parser.parseText("\\x:Bool -> Nat.y").toString());
 		assertEquals("(\\x:(Bool -> (Nat -> Bool)).y)", parser.parseText("\\x:Bool -> Nat -> Bool.y").toString());
 		assertEquals("(\\w:(Bool -> Nat).(w v))", parser.parseText("\\w:Bool -> Nat.(w v)").toString());
+		assertEquals("(\\w:(Bool -> (Nat -> Nat)).(w v))", parser.parseText("\\w:Bool -> Nat -> Nat.(w v)").toString());
+		assertEquals("(\\w:(Bool -> ((Nat -> Nat) -> Bool)).(w v))", 
+				parser.parseText("\\w:Bool -> (Nat -> Nat) -> Bool.(w v)").toString());
 	}
 
 }
