@@ -1,4 +1,4 @@
-package com.hu.elte.fuz.lambda.parser;
+package com.hu.elte.fuz.lambda.parser.elements;
 
 import java.util.HashSet;
 import java.util.Set;

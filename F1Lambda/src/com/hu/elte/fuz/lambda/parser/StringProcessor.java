@@ -31,7 +31,8 @@ public class StringProcessor {
 	public String eatNextWord() throws NoSuchAlgorithmException{
 		String word = "";
 		while(this.hasNext() && 
-				!this.getNext().equals(" ") && 
+				!this.getNext().equals(" ") &&
+				!this.getNext().equals(",") && 
 				!this.getNext().equals(".") && 
 				!this.getNext().equals(")")){
 			word += this.eatNext();

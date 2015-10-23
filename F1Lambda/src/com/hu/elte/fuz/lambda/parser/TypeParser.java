@@ -3,7 +3,14 @@ package com.hu.elte.fuz.lambda.parser;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 
+import com.hu.elte.fuz.lambda.parser.elements.Type;
+import com.hu.elte.fuz.lambda.parser.elements.TypeBase;
+import com.hu.elte.fuz.lambda.parser.elements.TypeExpression;
+
 public class TypeParser {
+	public Type typeParser(String text) throws NoSuchAlgorithmException, ParseException{
+		return this.typeParser(new StringProcessor(text));
+	}
 	/**
 	 * Visszaadja a típust
 	 * @param sp
@@ -21,7 +28,7 @@ public class TypeParser {
 		// legbaloldalibb ág meghatározása
 		Type typeT = determineNextType(sp);
 		// a típuskifejezés folytatódik?
-		if(sp.getNext().equals(" ")){
+		if(sp.hasNext() && sp.getNext().equals(" ")){
 			if(sp.eatNext().equals(" ") &&
 					sp.eatNext().equals("-") &&
 					sp.eatNext().equals(">") &&

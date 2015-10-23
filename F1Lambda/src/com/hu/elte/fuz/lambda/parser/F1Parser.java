@@ -5,8 +5,16 @@ import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.hu.elte.fuz.lambda.parser.elements.LambdaExpression;
+import com.hu.elte.fuz.lambda.parser.elements.LambdaTAbstraction;
+import com.hu.elte.fuz.lambda.parser.elements.LambdaTApplication;
+import com.hu.elte.fuz.lambda.parser.elements.LambdaTypeVariable;
+import com.hu.elte.fuz.lambda.parser.elements.SpaceToken;
+import com.hu.elte.fuz.lambda.parser.elements.Type;
+import com.hu.elte.fuz.lambda.parser.elements.Variable;
+
 public class F1Parser {
-	
+		private VariableParser vp = new VariableParser();
 		public LambdaExpression parseText(String text) throws NoSuchAlgorithmException, ParseException{
 			text = text.replaceAll(" +"," ");
 			StringProcessor sp = new StringProcessor(text);
@@ -22,11 +30,11 @@ public class F1Parser {
 			if(sp.hasNext()){
 				String token = sp.eatNext();
 				// \\x:Bool -> Nat -> Bool.y
-				if(isVariable(token)){
+				if(vp.isVariable(token)){
 					le = new LambdaTypeVariable(new Variable(token));
 				}else if(isLambdaAbstrastor(token)){
 					String token2 = sp.eatNext();
-					if(isVariable(token2)){
+					if(vp.isVariable(token2)){
 						if(sp.eatNext().equals(":")){
 							TypeParser tp = new TypeParser();
 							Type type = tp.typeParser(sp);
@@ -84,9 +92,5 @@ public class F1Parser {
 			return token.equals("\\");
 		}
 
-		private boolean isVariable(String token) {
-			Pattern p = Pattern.compile("[a-zA-Z]");
-			Matcher m = p.matcher(token+"");
-			return m.find();
-		}
+		
 }
