@@ -2,7 +2,7 @@ package com.hu.elte.fuz.lambda.parser.elements;
 
 import java.util.Set;
 
-public abstract class LambdaExpression {
+public abstract class LambdaExpression implements Cloneable{
 
 	public abstract Set<Variable> getVariables();
 
@@ -10,6 +10,15 @@ public abstract class LambdaExpression {
 	
 	public abstract String structuredToString(int level);
 	
+	public LambdaExpression clone(){
+		try {
+			return (LambdaExpression) super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		assert(true);
+		return null;
+	}
 
 	/**
 	 * A kifejezés zárt, ha minden változója kötött
@@ -24,7 +33,5 @@ public abstract class LambdaExpression {
 		all.removeAll(this.getBoundVariables());
 		return all;
 	}
-
-	
 	
 }

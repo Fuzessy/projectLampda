@@ -3,7 +3,7 @@ package com.hu.elte.fuz.lambda.parser.elements;
 import java.util.HashSet;
 import java.util.Set;
 
-public class LambdaTAbstraction extends LambdaExpression{
+public class LambdaTAbstraction extends LambdaExpression implements Cloneable{
 	// \x:Bool -> Nat -> Bool.y
 	Variable variable;
 	Type type;
@@ -14,6 +14,9 @@ public class LambdaTAbstraction extends LambdaExpression{
 		this.variable = variable;
 		this.type = type;
 		this.lambdaExpression = lambdaExpression;
+	}
+
+	private LambdaTAbstraction() {
 	}
 
 	@Override
@@ -50,12 +53,25 @@ public class LambdaTAbstraction extends LambdaExpression{
 		return lambdaExpression;
 	}
 
+	public Type getType() {
+		return type;
+	}
+
 	@Override
 	public String structuredToString(int level) {
 		return  "\nL" + level + ":" + "\\" + variable + 
 				":" + type + "." +
 				"\nR" + level + ":" + lambdaExpression +
 				lambdaExpression.structuredToString(++level);
+	}
+
+	@Override
+	public LambdaTAbstraction clone() {
+		LambdaTAbstraction clone = (LambdaTAbstraction) super.clone();
+		clone.variable = this.variable.clone();
+		clone.type = this.type.clone();
+		clone.lambdaExpression = this.lambdaExpression.clone();
+		return clone;
 	}
 	
 	

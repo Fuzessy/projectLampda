@@ -126,7 +126,14 @@ public class LambdaTApplication extends LambdaExpression{
 			   lambdaExpression2.structuredToString(level + 1);
 	}
 
-	
+	@Override
+	public LambdaTApplication clone(){
+		LambdaTApplication clone = (LambdaTApplication) super.clone();
+		clone.lambdaExpression = this.lambdaExpression.clone();
+		clone.spaceToken = new SpaceToken();
+		clone.lambdaExpression2 = this.lambdaExpression2.clone();
+		return clone;
+	}
 	
 	
 }

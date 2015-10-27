@@ -38,4 +38,11 @@ public class LambdaTypeVariable extends LambdaExpression {
 	public String structuredToString(int level) {
 		return "";
 	}
+	
+	@Override
+	public LambdaTypeVariable clone(){
+		LambdaTypeVariable clone = (LambdaTypeVariable) super.clone();
+		clone.variable = this.variable.clone();
+		return clone;
+	}
 }

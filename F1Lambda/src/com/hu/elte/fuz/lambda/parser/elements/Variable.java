@@ -1,10 +1,8 @@
 package com.hu.elte.fuz.lambda.parser.elements;
 
-public class Variable {
+public class Variable implements Cloneable{
 	private String value;
 
-	
-	
 	public Variable(String value) {
 		super();
 		this.value = value;
@@ -53,5 +51,17 @@ public class Variable {
 		return true;
 	}
 	
+	@Override
+	public Variable clone(){
+		try {
+			Variable clone = (Variable) super.clone();
+			clone.value = new String(this.value);
+			return clone;
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		assert(true);
+		return null;
+	}
 	
 }
